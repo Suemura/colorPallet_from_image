@@ -1,0 +1,1 @@
+# colorPallet_from_image
