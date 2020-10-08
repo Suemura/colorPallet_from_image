@@ -99,7 +99,6 @@ class CPI_OT_ColorPicker(bpy.types.Operator):
         for n in range(scene["cpi_cluster"]):
             n_data.append(len([x for x in code if x == n]))
         desc_order = np.argsort(n_data)[::-1]
-        print(codebook)
         return codebook
         # return ['#{:02x}{:02x}{:02x}'.format(*(codebook[elem].astype(int))) for elem in desc_order]
 
@@ -110,31 +109,31 @@ class CPI_OT_ColorPicker(bpy.types.Operator):
         print(color_list)
 
         if scene["cpi_cluster"] == 1:
-            R = color_list[0][0] / 100.0
-            G = color_list[0][1] / 100.0
-            B = color_list[0][2] / 100.0
+            R = color_list[0][0] / 255.0
+            G = color_list[0][1] / 255.0
+            B = color_list[0][2] / 255.0
             print("{}{}{}".format(R, G, B))
             color_ramp.color_ramp.elements.remove(color_ramp.color_ramp.elements[0])
             color_ramp.color_ramp.elements[0].color = (R, G, B, 1)
         elif scene["cpi_cluster"] == 2:
-            R = color_list[0][0] / 100.0
-            G = color_list[0][1] / 100.0
-            B = color_list[0][2] / 100.0
+            R = color_list[0][0] / 255.0
+            G = color_list[0][1] / 255.0
+            B = color_list[0][2] / 255.0
             # print('#{}{}{}'.format(hex(R), hex(G), hex(B)))
             print("{}{}{}".format(R, G, B))
             color_ramp.color_ramp.elements[0].color = (R, G, B, 1)
-            R = color_list[1][0] / 100.0
-            G = color_list[1][1] / 100.0
-            B = color_list[1][2] / 100.0
+            R = color_list[1][0] / 255.0
+            G = color_list[1][1] / 255.0
+            B = color_list[1][2] / 255.0
             # print('#{}{}{}'.format(hex(R), hex(G), hex(B)))
             print("{}{}{}".format(R, G, B))
             color_ramp.color_ramp.elements[1].color = (R, G, B, 1)
         else:
             val = 1.0 / (len(color_list)-1)
             for i, color_code in enumerate(color_list):
-                R = color_code[0] / 100.0
-                G = color_code[1] / 100.0
-                B = color_code[2] / 100.0
+                R = color_code[0] / 255.0
+                G = color_code[1] / 255.0
+                B = color_code[2] / 255.0
                 if i == 0:
                     color_ramp.color_ramp.elements[0].color = (R, G, B, 1)
                 elif i == len(color_list) - 1:
@@ -181,6 +180,7 @@ class CPI_PT_tools(bpy.types.Panel):
         col.prop(context.scene, "cpi_cluster", text="Color number")
         col.operator("cpi.color_picker", text="pick!")
         # col.label(text="output_directory")
+
 
 # クラスの登録
 def register():
